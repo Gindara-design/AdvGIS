@@ -1,0 +1,77 @@
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+
+#controls {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.slider {
+  margin-bottom: 10px;
+}
+
+.slider h3 {
+  margin: 0 0 5px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.slider input[type="range"] {
+  width: 100%;
+  margin: 0;
+  background-color: #ddd;
+  border-radius: 10px;
+  -webkit-appearance: none;
+}
+
+.slider input[type="range"]:focus {
+  outline: none;
+}
+
+.slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  background-color: #fff;
+  border-radius: 50%;
+  border: 2px solid #666;
+  box-shadow: 0 2px 2px rgba(0,0,0,0.2);
+  cursor: pointer;
+  margin-top: -9px;
+}
+
+.slider .slider-labels {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+.slider .slider-labels span {
+  flex: 1;
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+label input[type="checkbox"] {
+  margin-right: 5px;
+  cursor: pointer;
+}
+

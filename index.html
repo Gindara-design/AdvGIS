@@ -1,0 +1,396 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset='utf-8' />
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css' rel='stylesheet' />
+
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<div id='map'></div>
+<div id="controls">
+ 
+  <div class="slider">
+    <h3>Sea Level Rise</h3>
+    <input type="range" id="sea-level-slider" min="5" max="20" step="5" value="5">
+    <div class="slider-labels">
+      <span>5m</span>
+      <span>10m</span>
+      <span>15m</span>
+      <span>20m</span>
+    </div>
+  </div>
+  <div class="slider">
+    <h3>SAVI</h3>
+    <input type="range" id="savi-slider" min="12" max="22" step="3" value="12">
+    <div class="slider-labels">
+      <span>2012</span>
+      <span>2015</span>
+      <span>2018</span>
+      <span>2022</span>
+    </div>
+  </div>
+  <div class="slider">
+    <h3>UI</h3>
+    <input type="range" id="ui-slider" min="12" max="22" step="3" value="12">
+    <div class="slider-labels">
+      <span>2012</span>
+      <span>2015</span>
+      <span>2018</span>
+      <span>2022</span>
+    </div>
+  </div>
+  <div>
+    <h3>Layer Visibility</h3>
+    <label><input type="checkbox" id="building-layer-checkbox" unchecked>Building Density</label>
+    <label><input type="checkbox" id="road-layer-checkbox" unchecked>Road Density</label>
+    <label><input type="checkbox" id="sea-level-layer-checkbox" unchecked>Sea Level Rise</label>
+    <label><input type="checkbox" id="savi-layer-checkbox" unchecked>SAVI</label>
+    <label><input type="checkbox" id="ui-layer-checkbox" unchecked>UI</label>
+  </div>
+</div>
+
+
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiZ2FuZ3VsIiwiYSI6ImNsMGY0bHBtYzBwZnYzZG9udjUyZm04em8ifQ.Ld9mrjDwFt05_ybwSC-F5Q';
+var map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/gangul/cl3cr123n000314p94qbsembo',
+  center: [159.95, -9.43333], // Updated center coordinates for Honiara
+  zoom: 12
+});
+map.addControl(new mapboxgl.NavigationControl());
+map.on('load', function() {
+  map.addSource('geoserver-layer', {
+    type: 'raster',
+    url: 'http://localhost:8080/geoserver/project/wms?service=WMS&version=1.1.0&request=GetMap&layers=project%3Abuilding_density_raster&bbox=159.9120824916757%2C-9.459915469361338%2C160.07935619876915%2C-9.406615409040631&width=768&height=330&srs=EPSG%3A4326&styles=&format=image%2Fpng'
+  });
+   map.addLayer({
+    'id': 'Building_density',
+    'type': 'raster',
+    'source': {
+      'type': 'raster',
+      'url': 'mapbox://gangul.66eqn26h'
+    },
+    'source-layer': 'Building_density-6wqw2r',
+    'paint': {},
+    "layout": {
+      "visibility": "none"
+    }
+
+  });
+  // Add raster layer from tileset to the map
+  map.addLayer({
+    'id': 'road_density',
+    'type': 'raster',
+    'source': {
+      'type': 'raster',
+      'url': 'mapbox://gangul.9s763dbf'
+    },
+    'source-layer': 'road_density-2hv8z7',
+    'paint': {},
+    "layout": {
+      "visibility": "none"
+    }
+
+  });
+  map.addLayer({
+    'id': 'ui12',
+    'type': 'raster',
+    'source': {
+      'type': 'raster',
+      'url': 'mapbox://gangul.2pmb1kh6'
+    },
+    'source-layer': 'ui12-2tme3u',
+    'paint': {},
+    "layout": {
+      "visibility": "none"
+    }
+  });
+  map.addLayer({
+    'id': 'ui15',
+    'type': 'raster',
+    'source': {
+      'type': 'raster',
+      'url': 'mapbox://gangul.5vpinbjx'
+    },
+    'source-layer': 'ui15-4kwwxo',
+    'paint': {},
+    "layout": {
+      "visibility": "none"
+    }
+  });
+  map.addLayer({
+    'id': 'ui18',
+    'type': 'raster',
+    'source': {
+      'type': 'raster',
+      'url': 'mapbox://gangul.b55sz8iv'
+    },
+    'source-layer': 'ui18-6xygqb',
+    'paint': {},
+    "layout": {
+      "visibility": "none"
+    }
+  });
+  map.addLayer({
+    'id': 'ui22',
+    'type': 'raster',
+    'source': {
+      'type': 'raster',
+      'url': 'mapbox://gangul.1dtcai98'
+    },
+    'source-layer': 'ui22-561c3x',
+    'paint': {},
+    "layout": {
+      "visibility": "none"
+    }
+  });
+  map.addLayer({
+    'id': 'savi12',
+    'type': 'raster',
+    'source': {
+      'type': 'raster',
+      'url': 'mapbox://gangul.2q1bevef'
+    },
+    'source-layer': 'savi12-3vwhm4',
+    'paint': {},
+    "layout": {
+      "visibility": "none"
+    }
+  });
+  map.addLayer({
+    'id': 'savi15',
+    'type': 'raster',
+    'source': {
+      'type': 'raster',
+      'url': 'mapbox://gangul.4xr231q0'
+    },
+    'source-layer': 'savi15-3c0fw1',
+    'paint': {},
+    "layout": {
+      "visibility": "none"
+    }
+  });
+  map.addLayer({
+    'id': 'savi18',
+    'type': 'raster',
+    'source': {
+      'type': 'raster',
+      'url': 'mapbox://gangul.932ze36l'
+    },
+    'source-layer': 'savi18-2bpv5g',
+    'paint': {},
+    "layout": {
+      "visibility": "none"
+    }
+  });
+  map.addLayer({
+    'id': 'savi22',
+    'type': 'raster',
+    'source': {
+      'type': 'raster',
+      'url': 'mapbox://gangul.8nv4o205'
+    },
+    'source-layer': 'savi22-9etx81',
+    'paint': {},
+    "layout": {
+      "visibility": "none"
+    }
+  });
+  map.addLayer({
+    'id': '5m',
+    'type': 'raster',
+    'source': {
+      'type': 'raster',
+      'url': 'mapbox://gangul.9unfozkf'
+    },
+    'source-layer': '5-0ohzr7',
+    'paint': {},
+    "layout": {
+      "visibility": "none"
+    }
+  });
+  map.addLayer({
+    'id': '10m',
+    'type': 'raster',
+    'source': {
+      'type': 'raster',
+      'url': 'mapbox://gangul.8f9wol3t'
+    },
+    'source-layer': '10-48xfzb',
+    'paint': {},
+    "layout": {
+      "visibility": "none"
+    }
+  });
+  map.addLayer({
+    'id': '15m',
+    'type': 'raster',
+    'source': {
+      'type': 'raster',
+      'url': 'mapbox://gangul.3p1urmya'
+    },
+    'source-layer': '15-7xsmum',
+    'paint': {},
+    "layout": {
+      "visibility": "none"
+    }
+  });
+  map.addLayer({
+    'id': '20m',
+    'type': 'raster',
+    'source': {
+      'type': 'raster',
+      'url': 'mapbox://gangul.7zi6kx7k'
+    },
+    'source-layer': '20m-3g08v2',
+    'paint': {},
+    "layout": {
+      "visibility": "none"
+    }
+  });
+});
+const building_density_layer_checkbox = document.getElementById("building-layer-checkbox");
+
+building_density_layer_checkbox.addEventListener(
+  "click", (e) => {
+    if (building_density_layer_checkbox.checked == true) {
+      map.setLayoutProperty("Building_density", 'visibility', 'visible');
+    } else {
+      map.setLayoutProperty("Building_density", 'visibility', 'none');
+    }
+  }
+);
+const road_density_layer_checkbox = document.getElementById("road-layer-checkbox");
+
+road_density_layer_checkbox.addEventListener(
+  "click", (e) => {
+    if (road_density_layer_checkbox.checked == true) {
+      map.setLayoutProperty("road_density", 'visibility', 'visible');
+    } else {
+      map.setLayoutProperty("road_density", 'visibility', 'none');
+    }
+  }
+);
+// Get the checkbox elements
+const seaLevelCheckbox = document.getElementById('sea-level-layer-checkbox');
+const uiCheckbox = document.getElementById('ui-layer-checkbox');
+const saviCheckbox = document.getElementById('savi-layer-checkbox');
+
+// Get the layer ids
+const layerIds = [
+  '5m',
+  '10m',
+  '15m',
+  '20m',
+  'ui12',
+  'ui15',
+  'ui18',
+  'ui22',
+  'savi12',
+  'savi15',
+  'savi18',
+  'savi22',
+];
+
+// Define the layer IDs for the sea level rise layers
+const seaLevelLayers = ['5m', '10m', '15m', '20m'];
+
+// Get references to the sea level slider and checkbox elements
+const seaLevelSlider = document.getElementById('sea-level-slider');
+
+
+// Create a function to update the visibility of the sea level layers based on the slider and checkbox states
+function updateSeaLevelVisibility() {
+  if (seaLevelCheckbox.checked) {
+    const seaLevel = parseInt(seaLevelSlider.value);
+    seaLevelLayers.forEach(layerId => {
+      if (layerId === seaLevel + 'm') {
+        map.setLayoutProperty(layerId, 'visibility', 'visible');
+      } else {
+        map.setLayoutProperty(layerId, 'visibility', 'none');
+      }
+    });
+  } else {
+    seaLevelLayers.forEach(layerId => {
+      map.setLayoutProperty(layerId, 'visibility', 'none');
+    });
+  }
+}
+
+// Add an event listener to the sea level slider to update the layer visibility when the value changes
+seaLevelSlider.addEventListener('input', () => {
+  updateSeaLevelVisibility();
+});
+
+// Add an event listener to the sea level checkbox to update the layer visibility when it's checked or unchecked
+seaLevelCheckbox.addEventListener('change', () => {
+  updateSeaLevelVisibility();
+});
+// get references to the UI elements we'll be working with
+const uiLayerCheckbox = document.getElementById('ui-layer-checkbox');
+const uiSlider = document.getElementById('ui-slider');
+
+// define the layer IDs we want to toggle on/off
+const uiLayers = ['ui12', 'ui15', 'ui18', 'ui22'];
+
+// set up an event listener for when the UI slider value changes
+uiSlider.addEventListener('change', function() {
+  // loop over the UI layers and set their visibility according to the slider value
+  uiLayers.forEach(function(layerId) {
+    const visibility = (layerId === `ui${uiSlider.value}` && uiLayerCheckbox.checked) ? 'visible' : 'none';
+    map.setLayoutProperty(layerId, 'visibility', visibility);
+  });
+});
+
+// set up an event listener for when the UI layer checkbox changes
+uiLayerCheckbox.addEventListener('change', function() {
+  // loop over the UI layers and set their visibility according to the checkbox value
+  uiLayers.forEach(function(layerId) {
+    const visibility = uiLayerCheckbox.checked && layerId === `ui${uiSlider.value}` ? 'visible' : 'none';
+    map.setLayoutProperty(layerId, 'visibility', visibility);
+  });
+});
+
+// Get the SAVI slider and SAVI layer checkbox elements
+const saviSlider = document.getElementById('savi-slider');
+
+
+// Define the SAVI layer ids
+const saviLayers = ['savi12', 'savi15', 'savi18', 'savi22'];
+
+// Function to update the visibility of SAVI layers based on slider value and checkbox
+function updateSaviLayersVisibility() {
+  // Check if the SAVI layer checkbox is checked
+  const saviLayerVisible = saviCheckbox.checked;
+
+  // Get the current slider value and calculate the index of the corresponding SAVI layer
+  const saviSliderValue = parseInt(saviSlider.value);
+  const saviLayerIndex = (saviSliderValue - 12) / 3;
+
+  // Loop through all SAVI layers and set their visibility based on the checkbox and slider value
+  saviLayers.forEach((layerId, index) => {
+    if (index === saviLayerIndex && saviLayerVisible) {
+      map.setLayoutProperty(layerId, 'visibility', 'visible');
+    } else {
+      map.setLayoutProperty(layerId, 'visibility', 'none');
+    }
+  });
+}
+
+// Attach the updateSaviLayersVisibility function to the slider and checkbox change events
+saviSlider.addEventListener('change', updateSaviLayersVisibility);
+saviCheckbox.addEventListener('change', updateSaviLayersVisibility);
+
+// Initialize the SAVI layers visibility based on the checkbox and slider value
+updateSaviLayersVisibility();
+
+</script>
+
+</body>
+
+</html>
